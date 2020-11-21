@@ -10,6 +10,7 @@
 struct PathInfo {
     std::vector<int> path;
     int cost;
+    int thread_id;
 };
 
 // global variables
@@ -165,6 +166,7 @@ void TSP_RandomPaths(std::vector<std::vector<int>> map, int cities)
             {
                 answer.path = visited;
                 answer.cost = curr_cost;
+                answer.thread_id = thread_id;
                 loop_counter++;
             }
 
@@ -172,6 +174,7 @@ void TSP_RandomPaths(std::vector<std::vector<int>> map, int cities)
             {
                 answer.path = visited;
                 answer.cost = curr_cost;
+                answer.thread_id = thread_id;
             }
 
             // prepare for finding another path
@@ -187,7 +190,7 @@ void TSP_RandomPaths(std::vector<std::vector<int>> map, int cities)
     }
     for (int i = 0; i < cores; i++)
     {
-        if(thread_answers[i].cost == thread_id)
+        if(thread_answers[i].thread_id == thread_id)
             thread_answers[i] = answer;
     }
 }
@@ -228,7 +231,7 @@ int main()
     for (int i = 0; i < cores; i++)
     {
          h[i] = CreateThread(NULL, 0, f, &map, 0, NULL);
-         thread_answers[i].cost = GetThreadId(h[i]);
+         thread_answers[i].thread_id = GetThreadId(h[i]);
     }
 
     start_switch = true;
