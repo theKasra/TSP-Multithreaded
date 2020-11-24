@@ -199,8 +199,8 @@ void TSP_RandomPaths(std::vector<std::vector<int>> map, int cities)
 DWORD WINAPI f(LPVOID Params)
 {
     std::vector<std::vector<int>>& map = *(std::vector<std::vector<int>>*) Params;
-    if(start_switch)
-        TSP_RandomPaths(map, cities);
+    while(!start_switch);
+    TSP_RandomPaths(map, cities);
     return 0;
 }
 
